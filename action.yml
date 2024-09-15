@@ -1,0 +1,24 @@
+name: "The name of your action here"
+description: "Provide a description here"
+author: "Your name or organization here"
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: "heart"
+  color: "red"
+
+inputs:
+  authentik_url:
+    description: "URL to the authentik instance"
+    required: true
+  client_id:
+    description: "Client ID of the application authorize to"
+    required: true
+
+outputs:
+  token:
+    description: "JWT token"
+
+runs:
+  using: node20
+  main: dist/index.js
