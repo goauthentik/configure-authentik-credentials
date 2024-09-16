@@ -9,13 +9,13 @@ export async function run(): Promise<void> {
     const authentikUrl: string = core.getInput("authentik_url");
     const clientId: string = core.getInput("client_id");
 
-    core.debug("Fetching GitHub Actions Token...");
+    core.info("Fetching GitHub Actions Token...");
     const idToken = await core.getIDToken();
-    core.debug("Got GitHub Actions token");
+    core.info("Got GitHub Actions token");
 
-    core.debug("Getting authentik token...");
+    core.info("Getting authentik token...");
     const token = await getAuthentikToken(authentikUrl, clientId, idToken);
-    core.debug("Got authentik token...");
+    core.info("Got authentik token...");
 
     core.setOutput("token", token.access_token);
   } catch (error) {

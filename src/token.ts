@@ -18,7 +18,10 @@ export async function getAuthentikToken(
   const resp: httpm.HttpClientResponse = await http.request(
     "POST",
     `${authentikUrl}/application/o/token/`,
-    new URLSearchParams(data as unknown as Record<string, string>).toString()
+    new URLSearchParams(data as unknown as Record<string, string>).toString(),
+    {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
   );
   const body = await resp.readBody();
   const statusCode = resp.message.statusCode || 500;

@@ -24969,12 +24969,12 @@ async function run() {
     try {
         const authentikUrl = core.getInput("authentik_url");
         const clientId = core.getInput("client_id");
-        core.debug("Fetching GitHub Actions Token...");
+        core.info("Fetching GitHub Actions Token...");
         const idToken = await core.getIDToken();
-        core.debug("Got GitHub Actions token");
-        core.debug("Getting authentik token...");
+        core.info("Got GitHub Actions token");
+        core.info("Getting authentik token...");
         const token = await (0, token_1.getAuthentikToken)(authentikUrl, clientId, idToken);
-        core.debug("Got authentik token...");
+        core.info("Got authentik token...");
         core.setOutput("token", token.access_token);
     }
     catch (error) {
@@ -25025,7 +25025,9 @@ async function getAuthentikToken(authentikUrl, clientId, idToken) {
     data.set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
     data.set("client_assertion", idToken);
     const http = new httpm.HttpClient("actions-authentik-auth");
-    const resp = await http.request("POST", `${authentikUrl}/application/o/token/`, new URLSearchParams(data).toString());
+    const resp = await http.request("POST", `${authentikUrl}/application/o/token/`, new URLSearchParams(data).toString(), {
+        "Content-Type": "application/x-www-form-urlencoded"
+    });
     const body = await resp.readBody();
     const statusCode = resp.message.statusCode || 500;
     if (statusCode >= 400) {
