@@ -25019,17 +25019,17 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getAuthentikToken = getAuthentikToken;
 const httpm = __importStar(__nccwpck_require__(6255));
 async function getAuthentikToken(authentikUrl, clientId, idToken) {
+    const data = new FormData();
+    data.set("grant_type", "client_credentials");
+    data.set("client_id", clientId);
+    data.set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
+    data.set("client_assertion", idToken);
     const http = new httpm.HttpClient("actions-authentik-auth");
-    const resp = await http.get(`${authentikUrl}/application/o/token/`, {
-        grant_type: "client_credentials",
-        client_id: clientId,
-        client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-        client_assertion: idToken
-    });
+    const resp = await http.request("POST", `${authentikUrl}/application/o/token/`, new URLSearchParams(data).toString());
     const body = await resp.readBody();
     const statusCode = resp.message.statusCode || 500;
     if (statusCode >= 400) {
-        throw new Error(`Failed to get authentik token: ${body}`);
+        throw new Error(`Failed to get authentik token: ${statusCode} ${body}`);
     }
     return JSON.parse(body);
 }
