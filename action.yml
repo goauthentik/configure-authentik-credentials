@@ -1,6 +1,6 @@
-name: "The name of your action here"
-description: "Provide a description here"
-author: "Your name or organization here"
+name: '"Configure authentik Credentials" Action for GitHub Actions'
+description: Creates authentik credentials for use in subsequent requests in a GitHub Action workflow
+author: "Authentik Security Inc."
 
 branding:
   icon: "heart"
