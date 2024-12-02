@@ -1,5 +1,6 @@
 name: '"Configure authentik Credentials" Action for GitHub Actions'
-description: Creates authentik credentials for use in subsequent requests in a GitHub Action workflow
+description:
+  Creates authentik credentials for use in subsequent requests in a GitHub Action workflow
 author: "Authentik Security Inc."
 
 branding:
