@@ -4,11 +4,10 @@
 
 ---
 
-[![GitHub Super-Linter](https://github.com/BeryJu/configure-authentik-credentials/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/BeryJu/configure-authentik-credentials/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/BeryJu/configure-authentik-credentials/actions/workflows/check-dist.yml/badge.svg)](https://github.com/BeryJu/configure-authentik-credentials/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/BeryJu/configure-authentik-credentials/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BeryJu/configure-authentik-credentials/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/goauthentik/configure-authentik-credentials/ci.yml?branch=main&label=build&style=for-the-badge)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/ci.yml)
+[![Check dist/](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/check-dist.yml/badge.svg)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/check-dist.yml)
+[![CodeQL](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/codeql-analysis.yml)
+[![Code Coverage](https://img.shields.io/codecov/c/gh/goauthentik/configure-authentik-credentials?style=for-the-badge)](https://codecov.io/gh/goauthentik/configure-authentik-credentials)
 
 # configure-authentik-credentials GitHub Action
 
@@ -32,7 +31,7 @@ steps:
     uses: actions/checkout@v4
   - name: Get authentik token
     id: authentik-token
-    uses: BeryJu/configure-authentik-credentials@v1 # Commit with the `v1` tag
+    uses: goauthentik/configure-authentik-credentials@v1 # Commit with the `v1` tag
     with:
       authentik_url: https://id.goauthentik.io
       client_id: foobar
