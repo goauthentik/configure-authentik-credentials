@@ -4,9 +4,9 @@
 
 ---
 
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/goauthentik/configure-authentik-credentials/ci.yml?branch=main&label=build&style=for-the-badge)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/ci.yml)
-[![Check dist/](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/check-dist.yml/badge.svg)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/codeql-analysis.yml)
+[![Test](https://img.shields.io/github/actions/workflow/status/goauthentik/configure-authentik-credentials/ci.yml?branch=main&label=test&style=for-the-badge)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/ci.yml)
+[![Check dist/](https://img.shields.io/github/actions/workflow/status/goauthentik/configure-authentik-credentials/check-dist.yml?branch=main&label=build&style=for-the-badge)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/check-dist.yml)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/goauthentik/configure-authentik-credentials/codeql-analysis.yml?branch=main&label=codeql&style=for-the-badge)](https://github.com/goauthentik/configure-authentik-credentials/actions/workflows/codeql-analysis.yml)
 [![Code Coverage](https://img.shields.io/codecov/c/gh/goauthentik/configure-authentik-credentials?style=for-the-badge)](https://codecov.io/gh/goauthentik/configure-authentik-credentials)
 
 # configure-authentik-credentials GitHub Action
