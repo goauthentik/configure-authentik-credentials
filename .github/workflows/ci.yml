@@ -15,7 +15,11 @@ jobs:
   test-typescript:
     name: TypeScript Tests
     runs-on: ubuntu-latest
-
+    permissions:
+      # Needed for checkout
+      contents: read
+      # Needed for codecov OIDC token
+      id-token: write
     steps:
       - name: Checkout
         id: checkout
@@ -47,13 +51,13 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
 
   # test-action:
   #   name: GitHub Actions Test
