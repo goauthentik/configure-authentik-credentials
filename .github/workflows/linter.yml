@@ -16,23 +16,13 @@ jobs:
   lint:
     name: Lint Codebase
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 0
-
-      - name: Setup Node.js
-        id: setup-node
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
+      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6
         with:
           node-version-file: package.json
           cache: npm
-
-      - name: Install Dependencies
-        id: install
-        run: npm ci
-
+      - run: npm ci
       - run: npm run lint
