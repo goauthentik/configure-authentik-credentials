@@ -53,11 +53,11 @@ jobs:
         with:
           use_oidc: true
 
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
         with:
           use_oidc: true
+          report_type: test_results
 
   # test-action:
   #   name: GitHub Actions Test
