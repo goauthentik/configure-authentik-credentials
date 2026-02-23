@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@actions/core": "^2.0.2",
-    "@actions/http-client": "^3.0.2",
+    "@actions/http-client": "^4.0.0",
     "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
