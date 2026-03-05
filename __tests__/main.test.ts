@@ -1,7 +1,8 @@
 import * as core from "@actions/core";
 import * as main from "../src/main";
 import * as token from "../src/token";
-import { sign } from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
+import { jest } from "@jest/globals";
 
 const runMock = jest.spyOn(main, "run");
 const getTokenMock = jest.spyOn(token, "getAuthentikToken");
@@ -16,10 +17,10 @@ describe("action", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    infoMock = jest.spyOn(core, "info").mockImplementation();
-    getInputMock = jest.spyOn(core, "getInput").mockImplementation();
-    setFailedMock = jest.spyOn(core, "setFailed").mockImplementation();
-    setOutputMock = jest.spyOn(core, "setOutput").mockImplementation();
+    infoMock = jest.spyOn(core, "info").mockImplementation(async () => {});
+    getInputMock = jest.spyOn(core, "getInput").mockImplementation(async () => {});
+    setFailedMock = jest.spyOn(core, "setFailed").mockImplementation(async () => {});
+    setOutputMock = jest.spyOn(core, "setOutput").mockImplementation(async () => {});
 
     infoMock.mockImplementation(async messages => {
       console.log(messages);
@@ -38,7 +39,7 @@ describe("action", () => {
       }
     });
 
-    const githubToken = sign(
+    const githubToken = jwt.sign(
       {
         aud: "foo",
         iss: "bar"
@@ -49,7 +50,7 @@ describe("action", () => {
       return githubToken;
     });
 
-    const finalToken = sign(
+    const finalToken = jwt.sign(
       {
         aud: "foo",
         iss: "bar"
@@ -83,7 +84,7 @@ describe("action", () => {
       }
     });
 
-    const githubToken = sign(
+    const githubToken = jwt.sign(
       {
         aud: "foo",
         iss: "bar"

@@ -4,6 +4,7 @@
   "version": "1.0.1",
   "author": "authentik Team <hello@goauthentik.io>",
   "private": true,
+  "type": "module",
   "homepage": "https://github.com/goauthentik/configure-authentik-credentials",
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
     ".": "./dist/index.js"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "scripts": {
     "bundle": "npm run format:write && npm run package",
@@ -29,58 +30,33 @@
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "lint": "npx eslint .",
-    "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "package": "npx rimraf ./dist && npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "package:watch": "npm run package -- --watch",
-    "test": "npx jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run package"
   },
   "license": "MIT",
-  "jest": {
-    "preset": "ts-jest",
-    "verbose": true,
-    "clearMocks": true,
-    "testEnvironment": "node",
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "testMatch": [
-      "**/*.test.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ],
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "coverageReporters": [
-      "cobertura",
-      "text"
-    ],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "./src/**"
-    ]
-  },
   "dependencies": {
     "@actions/core": "^3.0.0",
-    "@actions/http-client": "^3.0.2",
+    "@actions/http-client": "^4.0.0",
     "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
     "@jest/globals": "^30.2.0",
+    "@rollup/plugin-commonjs": "^29.0.1",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
     "@typescript-eslint/parser": "^8.32.1",
     "@vercel/ncc": "^0.38.4",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jest": "^29.15.0",
-    "eslint-plugin-jsonc": "^2.21.1",
     "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.3.0",
     "jest": "^30.2.0",
@@ -88,7 +64,9 @@
     "jsonwebtoken": "^9.0.3",
     "prettier": "^3.8.1",
     "prettier-eslint": "^16.4.2",
+    "rollup": "^4.59.0",
     "ts-jest": "^29.4.6",
+    "ts-jest-resolver": "^2.0.1",
     "typescript": "^5.9.3"
   }
 }
