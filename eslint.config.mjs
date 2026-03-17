@@ -22,7 +22,6 @@ export default [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:vitest/recommended",
     "plugin:prettier/recommended"
   ),
   {
@@ -77,6 +76,15 @@ export default [
       "no-shadow": "off",
       "no-unused-vars": "off",
       "prettier/prettier": "error"
+    }
+  },
+  {
+    files: ["**/__tests__/**/*.ts", "**/*.test.ts", "**/*.spec.ts"],
+    plugins: {
+      vitest
+    },
+    rules: {
+      ...vitest.configs.recommended.rules
     }
   }
 ];
