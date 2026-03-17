@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import { getAuthentikToken } from "./token";
+import { getAuthentikToken } from "./token.js";
 import { jwtDecode } from "jwt-decode";
 
 /**
