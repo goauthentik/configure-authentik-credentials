@@ -4,8 +4,8 @@ import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
-import jest from "eslint-plugin-jest";
 import prettier from "eslint-plugin-prettier";
+import vitest from "@vitest/eslint-plugin";
 import globals from "globals";
 
 const compat = new FlatCompat({
@@ -22,20 +22,20 @@ export default [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jest/recommended",
+    "plugin:vitest/recommended",
     "plugin:prettier/recommended"
   ),
   {
     plugins: {
-      jest,
       prettier,
-      "@typescript-eslint": typescriptEslint
+      "@typescript-eslint": typescriptEslint,
+      vitest
     },
 
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.jest,
+        ...globals.vitest,
         Atomics: "readonly",
         SharedArrayBuffer: "readonly"
       },
@@ -50,7 +50,7 @@ export default [
             "__fixtures__/*.ts",
             "__tests__/*.ts",
             "eslint.config.mjs",
-            "jest.config.ts",
+            "vitest.config.ts",
             "rollup.config.ts"
           ]
         },

@@ -2,33 +2,37 @@ import * as core from "@actions/core";
 import * as main from "../src/main";
 import * as token from "../src/token";
 import * as jwt from "jsonwebtoken";
-import { jest } from "@jest/globals";
+import { beforeEach, describe, expect, it, vi, type SpyInstance } from "vitest";
 
-const runMock = jest.spyOn(main, "run");
-const getTokenMock = jest.spyOn(token, "getAuthentikToken");
-const getIDTokenMock = jest.spyOn(core, "getIDToken");
+vi.mock("@actions/core", { spy: true });
 
-let infoMock: jest.SpiedFunction<typeof core.info>;
-let getInputMock: jest.SpiedFunction<typeof core.getInput>;
-let setFailedMock: jest.SpiedFunction<typeof core.setFailed>;
-let setOutputMock: jest.SpiedFunction<typeof core.setOutput>;
+const runMock = vi.spyOn(main, "run");
+const getTokenMock = vi.spyOn(token, "getAuthentikToken");
+const getIDTokenMock = vi.spyOn(core, "getIDToken");
+
+let infoMock: SpyInstance;
+let getInputMock: SpyInstance;
+let setFailedMock: SpyInstance;
+let setOutputMock: SpyInstance;
 
 describe("action", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
-    infoMock = jest.spyOn(core, "info").mockImplementation(async () => {});
-    getInputMock = jest.spyOn(core, "getInput").mockImplementation(async () => {});
-    setFailedMock = jest.spyOn(core, "setFailed").mockImplementation(async () => {});
-    setOutputMock = jest.spyOn(core, "setOutput").mockImplementation(async () => {});
+    infoMock = vi.spyOn(core, "info").mockImplementation(async () => {});
+    getInputMock = vi.spyOn(core, "getInput").mockImplementation(() => {
+      return "";
+    });
+    setFailedMock = vi.spyOn(core, "setFailed").mockImplementation(async () => {});
+    setOutputMock = vi.spyOn(core, "setOutput").mockImplementation(async () => {});
 
-    infoMock.mockImplementation(async messages => {
+    infoMock.mockImplementation(async (messages: string[]) => {
       console.log(messages);
     });
   });
 
   it("sets token output", async () => {
-    getInputMock.mockImplementation(name => {
+    getInputMock.mockImplementation((name: string) => {
       switch (name) {
         case "authentik_url":
           return "http://localhost:9000";
@@ -73,7 +77,7 @@ describe("action", () => {
   });
 
   it("sets a failed status", async () => {
-    getInputMock.mockImplementation(name => {
+    getInputMock.mockImplementation((name: string) => {
       switch (name) {
         case "authentik_url":
           return "http://localhost:9000";
