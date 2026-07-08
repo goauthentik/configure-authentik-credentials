@@ -71,7 +71,7 @@ describe("action", () => {
     await main.run();
     expect(runMock).toHaveReturned();
 
-    expect(getTokenMock).toHaveBeenCalledWith("http://localhost:9000", "foo", githubToken);
+    expect(getTokenMock).toHaveBeenCalledWith("http://localhost:9000", "foo", githubToken, "");
     expect(setOutputMock).toHaveBeenNthCalledWith(1, "token", finalToken);
     expect(setFailedMock).not.toHaveBeenCalled();
   });

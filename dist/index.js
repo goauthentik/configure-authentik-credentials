@@ -29125,12 +29125,15 @@ function getIDToken(aud) {
     });
 }
 
-async function getAuthentikToken(authentikUrl, clientId, idToken) {
+async function getAuthentikToken(authentikUrl, clientId, idToken, scope) {
     const data = new FormData();
     data.set("grant_type", "client_credentials");
     data.set("client_id", clientId);
     data.set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
     data.set("client_assertion", idToken);
+    if (scope !== "") {
+        data.set("scope", scope);
+    }
     const http = new HttpClient("actions-authentik-auth");
     const resp = await http.request("POST", `${authentikUrl}/application/o/token/`, new URLSearchParams(data).toString(), {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -29209,13 +29212,14 @@ async function run() {
     try {
         const authentikUrl = getInput("authentik_url");
         const clientId = getInput("client_id");
+        const scope = getInput("scope");
         info("Fetching GitHub Actions Token...");
         const idToken = await getIDToken();
         const decodedIdToken = jwtDecode(idToken);
         info("Got GitHub Actions token");
         info(`GitHub Actions token for '${decodedIdToken.aud}' by ${decodedIdToken.iss}`);
         info("Getting authentik token...");
-        const token = await getAuthentikToken(authentikUrl, clientId, idToken);
+        const token = await getAuthentikToken(authentikUrl, clientId, idToken, scope);
         const decodedAkToken = jwtDecode(token.access_token);
         info("Got authentik token...");
         info(`authentik token for '${decodedAkToken.aud}' by ${decodedAkToken.iss}`);
