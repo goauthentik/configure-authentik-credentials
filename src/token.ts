@@ -7,13 +7,17 @@ interface TokenResponse {
 export async function getAuthentikToken(
   authentikUrl: string,
   clientId: string,
-  idToken: string
+  idToken: string,
+  scope: string
 ): Promise<TokenResponse> {
   const data = new FormData();
   data.set("grant_type", "client_credentials");
   data.set("client_id", clientId);
   data.set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
   data.set("client_assertion", idToken);
+  if (scope !== "") {
+    data.set("scope", scope);
+  }
   const http: httpm.HttpClient = new httpm.HttpClient("actions-authentik-auth");
   const resp: httpm.HttpClientResponse = await http.request(
     "POST",

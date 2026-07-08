@@ -14,6 +14,9 @@ inputs:
   client_id:
     description: "Client ID of the application authorize to"
     required: true
+  scope:
+    description: "OAuth scopes to request, space separated list"
+    required: false
 
 outputs:
   token:

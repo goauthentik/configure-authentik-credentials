@@ -10,6 +10,7 @@ export async function run(): Promise<void> {
   try {
     const authentikUrl: string = core.getInput("authentik_url");
     const clientId: string = core.getInput("client_id");
+    const scope: string = core.getInput("scope");
 
     core.info("Fetching GitHub Actions Token...");
     const idToken = await core.getIDToken();
@@ -18,7 +19,7 @@ export async function run(): Promise<void> {
     core.info(`GitHub Actions token for '${decodedIdToken.aud}' by ${decodedIdToken.iss}`);
 
     core.info("Getting authentik token...");
-    const token = await getAuthentikToken(authentikUrl, clientId, idToken);
+    const token = await getAuthentikToken(authentikUrl, clientId, idToken, scope);
     const decodedAkToken = jwtDecode(token.access_token);
     core.info("Got authentik token...");
     core.info(`authentik token for '${decodedAkToken.aud}' by ${decodedAkToken.iss}`);
