@@ -36,8 +36,10 @@ steps:
       authentik_url: https://id.goauthentik.io
       client_id: foobar
   - name: Use the token
+    env:
+      AUTHENTIK_TOKEN: ${{ steps.authentik-token.outputs.token }}
     run: |
-      ${{ steps.authentik-token.outputs.token }}
+      curl -sSf -H "Authorization: Bearer $AUTHENTIK_TOKEN" https://example.internal/api
 ```
 
 ## Publishing a New Release

@@ -13,7 +13,7 @@ export async function run(): Promise<void> {
     const scope: string = core.getInput("scope");
 
     core.info("Fetching GitHub Actions Token...");
-    const idToken = await core.getIDToken();
+    const idToken = await core.getIDToken(authentikUrl);
     const decodedIdToken = jwtDecode(idToken);
     core.info("Got GitHub Actions token");
     core.info(`GitHub Actions token for '${decodedIdToken.aud}' by ${decodedIdToken.iss}`);
@@ -24,6 +24,7 @@ export async function run(): Promise<void> {
     core.info("Got authentik token...");
     core.info(`authentik token for '${decodedAkToken.aud}' by ${decodedAkToken.iss}`);
 
+    core.setSecret(token.access_token);
     core.setOutput("token", token.access_token);
   } catch (error) {
     // Fail the workflow run if an error occurs

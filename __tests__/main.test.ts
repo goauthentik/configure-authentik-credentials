@@ -14,6 +14,7 @@ let infoMock: SpyInstance;
 let getInputMock: SpyInstance;
 let setFailedMock: SpyInstance;
 let setOutputMock: SpyInstance;
+let setSecretMock: SpyInstance;
 
 describe("action", () => {
   beforeEach(() => {
@@ -25,6 +26,7 @@ describe("action", () => {
     });
     setFailedMock = vi.spyOn(core, "setFailed").mockImplementation(async () => {});
     setOutputMock = vi.spyOn(core, "setOutput").mockImplementation(async () => {});
+    setSecretMock = vi.spyOn(core, "setSecret").mockImplementation(() => {});
 
     infoMock.mockImplementation(async (messages: string[]) => {
       console.log(messages);
@@ -71,7 +73,12 @@ describe("action", () => {
     await main.run();
     expect(runMock).toHaveReturned();
 
+    expect(getIDTokenMock).toHaveBeenCalledWith("http://localhost:9000");
     expect(getTokenMock).toHaveBeenCalledWith("http://localhost:9000", "foo", githubToken, "");
+    expect(setSecretMock).toHaveBeenCalledWith(finalToken);
+    expect(setSecretMock.mock.invocationCallOrder[0]).toBeLessThan(
+      setOutputMock.mock.invocationCallOrder[0]
+    );
     expect(setOutputMock).toHaveBeenNthCalledWith(1, "token", finalToken);
     expect(setFailedMock).not.toHaveBeenCalled();
   });
@@ -107,5 +114,7 @@ describe("action", () => {
     expect(runMock).toHaveReturned();
 
     expect(setFailedMock).toHaveBeenNthCalledWith(1, "foo");
+    expect(setSecretMock).not.toHaveBeenCalled();
+    expect(setOutputMock).not.toHaveBeenCalled();
   });
 });
