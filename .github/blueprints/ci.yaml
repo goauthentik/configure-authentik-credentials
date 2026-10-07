@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://main.goauthentik.io/blueprints/schema.json
 # Trusts GitHub Actions OIDC tokens for the CI test application
 version: 1
 metadata:
@@ -21,6 +22,8 @@ entries:
       client_id: ci
       client_type: confidential
       redirect_uris: []
+      grant_types:
+        - client_credentials
       authorization_flow:
         !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
       invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
