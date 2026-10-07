@@ -37,23 +37,30 @@ jobs:
         with:
           use_oidc: true
           report_type: test_results
-  # test-action:
-  #   name: GitHub Actions Test
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Checkout
-  #       id: checkout
-  #       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  #     - uses: goauthentik/action-setup-authentik@v1
-  #       with:
-  #         version: stable
-  #         sentry_env: goauthentik-configure-authentik-credentials-ci
-  #     - name: Test Local Action
-  #       id: test-action
-  #       uses: ./
-  #       with:
-  #         milliseconds: 2000
-  #     - name: Print Output
-  #       id: output
-  #       run: echo "${{ steps.test-action.outputs.time }}"
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Needed for the GitHub Actions OIDC token
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: goauthentik/action-setup-authentik@5b35e5951a1ec761847711a5d8170dbd67675526 # v3.3
+        id: authentik
+        with:
+          version: stable
+          sentry_env: goauthentik-configure-authentik-credentials-ci
+          blueprints_path: .github/blueprints
+      - uses: ./
+        id: test-action
+        with:
+          authentik_url: ${{ steps.authentik.outputs.http_url }}
+          client_id: ci
+          scope: openid
+      - name: Use token
+        run: >-
+          curl -fsS -H "Authorization: Bearer $TOKEN" "$AUTHENTIK_URL/application/o/userinfo/"
+        env:
+          TOKEN: ${{ steps.test-action.outputs.token }}
+          AUTHENTIK_URL: ${{ steps.authentik.outputs.http_url }}
