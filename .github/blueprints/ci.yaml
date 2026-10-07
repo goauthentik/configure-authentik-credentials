@@ -20,6 +20,7 @@ entries:
     attrs:
       client_id: ci
       client_type: confidential
+      redirect_uris: []
       authorization_flow:
         !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
       invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
