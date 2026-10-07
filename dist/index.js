@@ -29604,7 +29604,7 @@ async function run() {
         const clientId = getInput("client_id");
         const scope = getInput("scope");
         info("Fetching GitHub Actions Token...");
-        const idToken = await getIDToken();
+        const idToken = await getIDToken(authentikUrl);
         const decodedIdToken = jwtDecode(idToken);
         info("Got GitHub Actions token");
         info(`GitHub Actions token for '${decodedIdToken.aud}' by ${decodedIdToken.iss}`);
@@ -29613,6 +29613,7 @@ async function run() {
         const decodedAkToken = jwtDecode(token.access_token);
         info("Got authentik token...");
         info(`authentik token for '${decodedAkToken.aud}' by ${decodedAkToken.iss}`);
+        setSecret(token.access_token);
         setOutput("token", token.access_token);
     }
     catch (error) {
